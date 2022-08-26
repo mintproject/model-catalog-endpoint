@@ -7,7 +7,7 @@ permissions:
 env:
   #docker env
   DOCKER_IMAGE_REPOSITORY: mintproject 
-  DOCKER_IMAGE_NAME: fusekimodelcatalog 
+  DOCKER_IMAGE_NAME: model-catalog-endpoint
   DOCKER_FILE: "Dockerfile"
   #security level
   VULNERABILITY_SCAN_LEVEL: "CRITICAL"
@@ -55,7 +55,7 @@ jobs:
           [ "$VERSION" == "master" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker tag $DOCKER_IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
 
     outputs:
