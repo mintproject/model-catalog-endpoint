@@ -8,7 +8,6 @@ env:
   #docker env
   DOCKER_IMAGE_REPOSITORY: mintproject 
   DOCKER_IMAGE_NAME: fuseki_model_catalog 
-  DOCKER_FILE: "."
   #security level
   VULNERABILITY_SCAN_LEVEL: "CRITICAL"
 
@@ -52,7 +51,6 @@ jobs:
           push: true
           context: .
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-          file: ${{ env.DOCKER_FILE}}
 
     outputs:
       docker_tag: ${{ steps.exposeValue.outputs.docker_tag }}
