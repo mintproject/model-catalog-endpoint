@@ -7,7 +7,7 @@ permissions:
 env:
   #docker env
   DOCKER_IMAGE_REPOSITORY: mintproject 
-  DOCKER_IMAGE_NAME: fuseki-model-catalog 
+  DOCKER_IMAGE_NAME: fusekimodelcatalog 
   DOCKER_FILE: "Dockerfile"
   #security level
   VULNERABILITY_SCAN_LEVEL: "CRITICAL"
