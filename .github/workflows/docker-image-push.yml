@@ -6,7 +6,7 @@ permissions:
 
 env:
   #docker env
-  DOCKER_IMAGE_REPOSITORY: mintproject 
+  DOCKER_IMAGE_REPOSITORY: mintproject
   DOCKER_IMAGE_NAME: model-catalog-endpoint
   DOCKER_FILE: "Dockerfile"
   #security level
@@ -31,6 +31,12 @@ jobs:
         with:
           lfs: true
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Create value as an environment variable
         run: |
           echo "DOCKER_TAG=${GITHUB_SHA}" >> $GITHUB_ENV
@@ -46,24 +52,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build image
-        run: docker build . --tag $DOCKER_IMAGE_NAME
-
-      - name: Push image
-        run: |
-          IMAGE_ID=${{ github.repository }}
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "master" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $DOCKER_IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3.0.0
+        with:
+          push: true
+          context: .
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_TAG }}
 
     outputs:
       docker_tag: ${{ steps.exposeValue.outputs.docker_tag }}
-  
+
   security:
     permissions:
       contents: read
@@ -81,7 +79,7 @@ jobs:
           template: "@/contrib/sarif.tpl"
           output: "trivy-results.sarif"
           severity: ${{ env.VULNERABILITY_SCAN_LEVEL }}
-          exit-code: "0" 
+          exit-code: "0"
           ignore-unfixed: "true"
 
       - name: Upload Trivy scan results to GitHub Security tab
@@ -89,4 +87,3 @@ jobs:
         if: always()
         with:
           sarif_file: "trivy-results.sarif"
-  
