@@ -1,4 +1,4 @@
-FROM secoresearch/fuseki:4.5.0
+FROM secoresearch/fuseki:3.9.0
 
 ENV ASSEMBLER $FUSEKI_BASE/configuration/model-catalog.ttl
 ENV JAVA_CMD java -cp "$FUSEKI_HOME/fuseki-server.jar:/javalibs/*"
