@@ -2,5 +2,7 @@ services:
   endpoint:
     build: .
     image: ikcap/model-catalog-endpoint:latest
+    environment:
+      ADMIN_PASSWORD: admin
     ports:
       - 3030:3030

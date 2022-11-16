@@ -1,8 +1,8 @@
 FROM secoresearch/fuseki:3.9.0
 
-RUN apt-get update \
- && apt-get install -qq curl
-
+USER root
+RUN apk add --update curl && rm -rf /var/cache/apk/*
+USER 9008
  
 ENV ASSEMBLER $FUSEKI_BASE/configuration/model-catalog.ttl
 ENV JAVA_CMD java -cp "$FUSEKI_HOME/fuseki-server.jar:/javalibs/*"
@@ -13,7 +13,5 @@ ENV TEXTINDEXER $JAVA_CMD jena.textindexer --desc=$ASSEMBLER
 ENV TDBSTATS $JAVA_CMD tdb.tdbstats --desc=$ASSEMBLER
 ENV TDB2TDBSTATS $JAVA_CMD tdb2.tdbstats --desc=$ASSEMBLER
 
-COPY --chown=9008 data/model-catalog.nq /tmp/model-catalog.nq
-COPY config/model-catalog.ttl ${ASSEMBLER}
-
-RUN $TDB2TDBLOADER /tmp/model-catalog.nq
+RUN mkdir $FUSEKI_BASE/seeds
+COPY data $FUSEKI_BASE/seeds
