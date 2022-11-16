@@ -1,5 +1,9 @@
 FROM secoresearch/fuseki:3.9.0
 
+RUN apt-get update \
+ && apt-get install -qq curl
+
+ 
 ENV ASSEMBLER $FUSEKI_BASE/configuration/model-catalog.ttl
 ENV JAVA_CMD java -cp "$FUSEKI_HOME/fuseki-server.jar:/javalibs/*"
 ENV TDBLOADER $JAVA_CMD tdb.tdbloader --desc=$ASSEMBLER
