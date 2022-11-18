@@ -158,7 +158,6 @@ jobs:
           branch: master 
           token: ${{ secrets.MINT_INSTANCES }}
 
-
       - name: Update helm charts
         uses: fjogeleit/yaml-update-action@main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
