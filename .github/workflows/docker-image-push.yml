@@ -158,15 +158,15 @@ jobs:
           branch: master 
           token: ${{ secrets.MINT_INSTANCES }}
 
-      - name: Update helm charts
-        uses: fjogeleit/yaml-update-action@main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        with:
-          valueFile: helm/values.yaml
-          propertyPath: "components.model_catalog_endpoint.image.tag"
-          value: ${{ env.DOCKER_TAG }}
-          message: "Update model catalog endpoint"
-          repository: mintproject/mint
-          workDir: mint-chart/
-          branch: main
-          token: ${{ secrets.MINT_INSTANCES }}
+      # - name: Update helm charts
+      #   uses: fjogeleit/yaml-update-action@main
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   with:
+      #     valueFile: helm/values.yaml
+      #     propertyPath: "components.model_catalog_endpoint.image.tag"
+      #     value: ${{ env.DOCKER_TAG }}
+      #     message: "Update model catalog endpoint"
+      #     repository: mintproject/mint
+      #     workDir: mint-chart/
+      #     branch: main
+      #     token: ${{ secrets.MINT_INSTANCES }}
