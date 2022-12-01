@@ -1,7 +1,7 @@
 FROM secoresearch/fuseki:4.6.1
 
 USER root
-RUN apk add --update curl && rm -rf /var/cache/apk/*
+RUN apt install -y curl && rm -rf /var/cache/apk/*
 USER 9008
  
 ENV ASSEMBLER $FUSEKI_BASE/configuration/model-catalog.ttl
