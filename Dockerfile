@@ -1,4 +1,4 @@
-FROM secoresearch/fuseki:3.9.0
+FROM secoresearch/fuseki:4.6.1
 
 USER root
 RUN apk add --update curl && rm -rf /var/cache/apk/*
