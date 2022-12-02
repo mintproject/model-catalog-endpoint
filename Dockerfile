@@ -1,7 +1,7 @@
 FROM kcapd/fuseki:3.9.0
 
 USER root
-RUN apt install -y curl && rm -rf /var/cache/apk/*
+RUN apk add curl && rm -rf /var/cache/apk/*
 USER 9008
  
 ENV ASSEMBLER $FUSEKI_BASE/configuration/model-catalog.ttl
