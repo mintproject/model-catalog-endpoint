@@ -1,4 +1,4 @@
-FROM secoresearch/fuseki:4.6.1
+FROM kcapd/fuseki:3.9.0
 
 USER root
 RUN apt install -y curl && rm -rf /var/cache/apk/*
