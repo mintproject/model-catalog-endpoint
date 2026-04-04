@@ -13,5 +13,8 @@ ENV TEXTINDEXER $JAVA_CMD jena.textindexer --desc=$ASSEMBLER
 ENV TDBSTATS $JAVA_CMD tdb.tdbstats --desc=$ASSEMBLER
 ENV TDB2TDBSTATS $JAVA_CMD tdb2.tdbstats --desc=$ASSEMBLER
 
+RUN chgrp -R 0 $FUSEKI_BASE \
+    && chmod -R g+rwX $FUSEKI_BASE
+
 RUN mkdir $FUSEKI_BASE/seeds
 COPY data $FUSEKI_BASE/seeds
